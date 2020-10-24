@@ -24,6 +24,8 @@ def checkof():
     checkcsv()
 
 def checkcsv():
+    global condition 
+    condition = False
     horse = str(horse_power.get())
     seats = seat_no.get()
     transmisssion = choose.get()
@@ -33,27 +35,33 @@ def checkcsv():
         item.pack_forget()
     main_screen.geometry('700x600')
     main_screen.title("car recommendator")
-    with open('sad1.csv', 'rt') as f:
+    with open('sad2.csv', 'rt') as f:
         reader = csv.reader(f, delimiter=',')
         for row in reader:
             data.append(row)
     for cost in data:
+        
         if seats==cost[4] and transmisssion == cost[5] and horse == cost[6] and choice == cost[7]:
-            
+                
             Label(main_screen, text="congratulations: "+user_name.get(), font=("Calibri", 20)).pack()
             Label(main_screen, text="").pack()
             Label(main_screen, text="Name of car : "+ cost[1], font=("Calibri", 15)).pack()
             Label(main_screen, text="").pack()
             Label(main_screen, text="price of  the car : " + cost[2], font=("Calibri", 15)).pack()
             Label(main_screen, text="").pack()
-            Button(main_screen, text="Try more ", bg="black", fg="white", width=20,height=1, font=("Calibri", 13), command=login).pack()
 
-           
-    Label(main_screen, text="sorry: "+user_name.get(), font=("Calibri", 20)).pack()
-    Label(main_screen, text="").pack()
-    Label(main_screen, text="currently we don't have this specification", font=("Calibri", 15)).pack()
-    Label(main_screen, text="").pack()
-    Button(main_screen, text="Try more ", bg="black", fg="white", width=20,height=1, font=("Calibri", 13), command=login).pack()
+            raw_data = str(cost[8])
+            print(raw_data)
+            Button(main_screen, text="Try more ", bg="black", fg="white", width=20,height=1, font=("Calibri", 13), command=login).pack()
+            condition = True
+
+        
+    if condition != True:
+        Label(main_screen, text="sorry: "+user_name.get(), font=("Calibri", 20)).pack()
+        Label(main_screen, text="").pack()
+        Label(main_screen, text="currently we don't have this specification", font=("Calibri", 15)).pack()
+        Label(main_screen, text="").pack()
+        Button(main_screen, text="Try more ", bg="black", fg="white", width=20,height=1, font=("Calibri", 13), command=login).pack()
 
     
 # Designing window for login
