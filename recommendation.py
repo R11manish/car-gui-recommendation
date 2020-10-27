@@ -4,6 +4,8 @@ from tkinter import *
 import os
 import csv
 import pathlib
+from PIL import Image, ImageTk
+import random
 location=pathlib.Path(__file__).parent.absolute() 
 location2 = str(location)+"\hii.png"
 print(location2)
@@ -33,7 +35,7 @@ def checkcsv():
     widget_list = all_children(main_screen)
     for item in widget_list:
         item.pack_forget()
-    main_screen.geometry('700x600')
+    main_screen.geometry('900x600')
     main_screen.title("car recommendator")
     with open('sad2.csv', 'rt') as f:
         reader = csv.reader(f, delimiter=',')
@@ -49,7 +51,14 @@ def checkcsv():
             Label(main_screen, text="").pack()
             Label(main_screen, text="price of  the car : " + cost[2], font=("Calibri", 15)).pack()
             Label(main_screen, text="").pack()
-
+            r1 = random.randint(0, 10)
+            ipath= str("img/" + str(r1) +".jpg")
+            load = Image.open(ipath)
+            load = load.resize((150, 100), Image.ANTIALIAS)
+            render = ImageTk.PhotoImage(load)
+            img = Label(image=render)
+            img.image = render
+            img.pack()
             raw_data = str(cost[8])
             print(raw_data)
             Button(main_screen, text="Try more ", bg="black", fg="white", width=20,height=1, font=("Calibri", 13), command=login).pack()
@@ -85,7 +94,7 @@ def login():
     widget_list = all_children(main_screen)
     for item in widget_list:
         item.destroy()
-    main_screen.geometry('700x600')
+    main_screen.geometry('1000x1000')
     main_screen.title("car recommendator")
 
     Label(main_screen, text="Enter your name").pack()
@@ -148,6 +157,8 @@ def main_account_screen():
     global main_screen
     main_screen = Tk()
     main_screen.geometry("900x601")
+    scrollbar = Scrollbar(main_screen)
+    scrollbar.pack( side = RIGHT, fill = Y )
     main_screen.title("car recommendator")
     background_image = PhotoImage(file=location2)
 
